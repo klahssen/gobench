@@ -1,0 +1,10 @@
+go test -bench=. -v -benchmem #-memprofile=memAll.out
+goos: darwin
+goarch: amd64
+pkg: github.com/klahssen/gobench/time
+BenchmarkClock100msGetTime-4   	18548994	        63.1 ns/op	       0 B/op	       0 allocs/op
+BenchmarkTimeNow-4             	 8991606	       123 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGetTimex1M-4          	      20	  58593882 ns/op	     603 B/op	       8 allocs/op
+BenchmarkTimeNowx1M-4          	       9	 124884654 ns/op	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/klahssen/gobench/time	5.152s

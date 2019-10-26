@@ -1,0 +1,10 @@
+go test -bench=. -v -benchmem #-memprofile=memAll.out
+goos: darwin
+goarch: amd64
+pkg: github.com/klahssen/gobench/concurrency
+BenchmarkSpawnGoSleep10x5ms-4      	     193	   6002775 ns/op	     736 B/op	      11 allocs/op
+BenchmarkSpawnGoSleep100x5ms-4     	     193	   6372892 ns/op	    6441 B/op	     101 allocs/op
+BenchmarkSpawnGoSleepWG10x5ms-4    	     198	   6428468 ns/op	     656 B/op	      11 allocs/op
+BenchmarkSpawnGoSleepWG100x5ms-4   	     182	   6303222 ns/op	    6416 B/op	     101 allocs/op
+PASS
+ok  	github.com/klahssen/gobench/concurrency	7.508s
