@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package hello.v1;
+option go_package = "github.com/klahssen/gobench/proto";
+
+message Profile {
+    string fname=1;
+    string lname=2;
+    string city=3;
+    uint32 age=4;
+    string country=5;
+    bool married=6;
+    repeated string hobbies=7;
+    int64 crea=8;
+    int64 upd=9;
+}
