@@ -22,6 +22,7 @@ func init() {
 }
 
 func TestProtoMarshaling(t *testing.T) {
+	t.Log("Payload comparisons with 20 audiences and ids 14chars long")
 	b, err := proto.Marshal(&p20auds)
 	if err != nil {
 		t.Errorf("failed to marshal: %v", err)
