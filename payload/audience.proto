@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package payload.v1;
+option go_package = "github.com/klahssen/gobench/payload";
+
+enum Action {
+    NONE=0;
+    ADD=1;
+    REMOVE=2;
+}
+
+message Payload {
+    string profile_id=1;
+    repeated Audience audiences=2;
+    Action action =3;
+}
+message Audience {
+    string aud_id=1;
+    string dt_id=2;
+}
