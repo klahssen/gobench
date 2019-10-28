@@ -7,10 +7,10 @@ import (
 func genPayload(nAudiences int) Payload {
 	s := "abcdefojkljkds"
 	p := Payload{
-		ProfileId: s,
-		Action:    Action_ADD,
+		WeboId: s,
+		Action: Action_ADD,
 	}
-	aud := &Audience{AudId: s, DtId: s}
+	aud := &Audience{AudienceId: s, DatatransferId: s}
 	auds := make([]*Audience, 0, nAudiences)
 	for i := 1; i <= nAudiences; i++ {
 		auds = append(auds, aud)
@@ -20,8 +20,8 @@ func genPayload(nAudiences int) Payload {
 }
 
 func payloadsAreEqual(ref, comp Payload) error {
-	if ref.ProfileId != comp.ProfileId {
-		return fmt.Errorf("expected ProfileID '%s' received '%s'", ref.ProfileId, comp.ProfileId)
+	if ref.WeboId != comp.WeboId {
+		return fmt.Errorf("expected ProfileID '%s' received '%s'", ref.WeboId, comp.WeboId)
 	}
 	if ref.Action != comp.Action {
 		return fmt.Errorf("expected Action '%s' received '%s'", ref.Action, comp.Action)
@@ -39,11 +39,11 @@ func payloadsAreEqual(ref, comp Payload) error {
 }
 
 func audiencesAreEqual(ref, comp Audience) error {
-	if ref.AudId != comp.AudId {
-		return fmt.Errorf("expected audience ID '%s' received '%s'", ref.AudId, comp.AudId)
+	if ref.AudienceId != comp.AudienceId {
+		return fmt.Errorf("expected audience ID '%s' received '%s'", ref.AudienceId, comp.AudienceId)
 	}
-	if ref.DtId != comp.DtId {
-		return fmt.Errorf("expected datatransfer ID '%s' received '%s'", ref.DtId, comp.DtId)
+	if ref.DatatransferId != comp.DatatransferId {
+		return fmt.Errorf("expected datatransfer ID '%s' received '%s'", ref.DatatransferId, comp.DatatransferId)
 	}
 	return nil
 }

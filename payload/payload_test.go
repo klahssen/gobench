@@ -42,7 +42,9 @@ func TestProtoMarshaling(t *testing.T) {
 }
 
 func TestCompareMarshaledSize(t *testing.T) {
+	t.Log("==== PROTOBUF ====")
 	//protobuf
+	ti := time.Now()
 	t0 := time.Now()
 	b1, err := proto.Marshal(&p20auds)
 	if err != nil {
@@ -92,8 +94,11 @@ func TestCompareMarshaledSize(t *testing.T) {
 		t.Errorf("proto.Unmarshal of zlib.Decompressed: invalid result: %v", err)
 		return
 	}
+	t.Logf("proto end to end in %s", time.Since(ti))
 	//t.Logf("%q", b1)
 	//json ==========================================================================
+	t.Log("==== JSON ====")
+	ti = time.Now()
 	t0 = time.Now()
 	b2, err := json.Marshal(&p20auds)
 	if err != nil {
@@ -144,4 +149,5 @@ func TestCompareMarshaledSize(t *testing.T) {
 		t.Errorf("json.Unmarshal of zlib.Decompressed: invalid result: %v", err)
 		return
 	}
+	t.Logf("json end to end in %s", time.Since(ti))
 }
