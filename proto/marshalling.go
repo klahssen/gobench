@@ -3,6 +3,8 @@ package proto
 import (
 	"log"
 	"time"
+
+	"github.com/golang/protobuf/proto"
 )
 
 var (
@@ -17,12 +19,12 @@ func init() {
 
 func UnmarshalHello() {
 	h := &Hello{}
-	h.XXX_Unmarshal(helloBytes)
+	proto.Unmarshal(helloBytes, h)
 }
 
 func MarshalHello() []byte {
 	h := &Hello{Name: "Superman"}
-	b, err := h.XXX_Marshal(nil, true)
+	b, err := proto.Marshal(h)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,14 +32,14 @@ func MarshalHello() []byte {
 }
 
 func UnmarshalProfile() {
-	h := &Hello{}
-	h.XXX_Unmarshal(helloBytes)
+	p := &Profile{}
+	proto.Unmarshal(profileBytes, p)
 }
 
 func MarshalProfile() []byte {
 	ts := time.Now().Unix()
-	h := &Profile{Crea: ts, Upd: ts, Fname: "Clark", Lname: "Kent", Age: 25, Married: false, City: "metropolis", Country: "United-States", Hobbies: []string{"flying", "swagging", "saving people", "being a hero", "journalism"}}
-	b, err := h.XXX_Marshal(nil, true)
+	p := &Profile{Crea: ts, Upd: ts, Fname: "Clark", Lname: "Kent", Age: 25, Married: false, City: "metropolis", Country: "United-States", Hobbies: []string{"flying", "swagging", "saving people", "being a hero", "journalism"}}
+	b, err := proto.Marshal(p)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,10 +1,9 @@
-go test -bench=. -v -benchmem 
 goos: darwin
 goarch: amd64
 pkg: github.com/klahssen/gobench/proto
-BenchmarkMarhshalHello-4      	 5963056	       245 ns/op	      72 B/op	       3 allocs/op
-BenchmarkUnmarshalHello-4     	 9115310	       122 ns/op	      56 B/op	       2 allocs/op
-BenchmarkMarhshalProfile-4    	 1207270	       991 ns/op	     488 B/op	       7 allocs/op
-BenchmarkUnmarshalProfile-4   	 9813925	       121 ns/op	      56 B/op	       2 allocs/op
+BenchmarkMarhshalHello-4      	 5331788	       253 ns/op	      64 B/op	       2 allocs/op
+BenchmarkUnmarshalHello-4     	 7958461	       150 ns/op	      56 B/op	       2 allocs/op
+BenchmarkMarhshalProfile-4    	 1322697	       931 ns/op	     368 B/op	       3 allocs/op
+BenchmarkUnmarshalProfile-4   	 1000000	      1342 ns/op	     496 B/op	      14 allocs/op
 PASS
-ok  	github.com/klahssen/gobench/proto	7.523s
+ok  	github.com/klahssen/gobench/proto	6.564s

@@ -1,0 +1,20 @@
+=== RUN   TestProtoMarshaling
+2019/10/28 22:07:07 698 bytes
+--- PASS: TestProtoMarshaling (0.00s)
+    payload_test.go:25: Payload comparisons with 20 audiences and ids 14chars long
+=== RUN   TestCompareMarshaledSize
+--- PASS: TestCompareMarshaledSize (0.00s)
+    payload_test.go:45: ==== PROTOBUF ====
+    payload_test.go:54: proto.Marshal: 698 bytes (in 4.84µs)
+    payload_test.go:68: zlib.Compress(proto): 41 bytes (in 184.572µs)
+    payload_test.go:81: zlib.Decompress(proto) in 8.955µs
+    payload_test.go:92: proto.Unmarshal in 11.507µs
+    payload_test.go:97: proto end to end in 303.689µs
+    payload_test.go:100: ==== JSON ====
+    payload_test.go:108: json.Marshal: 1413 bytes (in 206.28µs)
+    payload_test.go:123: zlib.Compress(json): 99 bytes (in 264.937µs)
+    payload_test.go:136: zlib.Decompress(json) in 18.77µs
+    payload_test.go:147: json.Unmarshal in 83.388µs
+    payload_test.go:152: json end to end in 633.821µs
+PASS
+ok  	github.com/klahssen/gobench/payload	0.262s
