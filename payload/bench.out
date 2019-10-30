@@ -1,20 +1,33 @@
+2019/10/30 22:00:23 p20audsBytesProto: 14020By, p20audsBytesJSON: 28290By
+2019/10/30 22:00:23 pslice20x20BytesProto: 698By, pslice20x20BytesJSON: 1413By
 === RUN   TestProtoMarshaling
-2019/10/28 22:07:07 698 bytes
+2019/10/30 22:00:23 698 bytes
 --- PASS: TestProtoMarshaling (0.00s)
-    payload_test.go:25: Payload comparisons with 20 audiences and ids 14chars long
+    payload_test.go:95: Payload comparisons with 20 audiences and ids 14chars long
 === RUN   TestCompareMarshaledSize
 --- PASS: TestCompareMarshaledSize (0.00s)
-    payload_test.go:45: ==== PROTOBUF ====
-    payload_test.go:54: proto.Marshal: 698 bytes (in 4.84µs)
-    payload_test.go:68: zlib.Compress(proto): 41 bytes (in 184.572µs)
-    payload_test.go:81: zlib.Decompress(proto) in 8.955µs
-    payload_test.go:92: proto.Unmarshal in 11.507µs
-    payload_test.go:97: proto end to end in 303.689µs
-    payload_test.go:100: ==== JSON ====
-    payload_test.go:108: json.Marshal: 1413 bytes (in 206.28µs)
-    payload_test.go:123: zlib.Compress(json): 99 bytes (in 264.937µs)
-    payload_test.go:136: zlib.Decompress(json) in 18.77µs
-    payload_test.go:147: json.Unmarshal in 83.388µs
-    payload_test.go:152: json end to end in 633.821µs
+    payload_test.go:115: ==== PROTOBUF ====
+    payload_test.go:124: proto.Marshal: 698 bytes (in 14.074µs)
+    payload_test.go:138: zlib.Compress(proto): 41 bytes (in 397.429µs)
+    payload_test.go:151: zlib.Decompress(proto) in 16.652µs
+    payload_test.go:162: proto.Unmarshal in 23.467µs
+    payload_test.go:167: proto end to end in 696.078µs
+    payload_test.go:170: ==== JSON ====
+    payload_test.go:178: json.Marshal: 1413 bytes (in 19.332µs)
+    payload_test.go:193: zlib.Compress(json): 99 bytes (in 526.365µs)
+    payload_test.go:206: zlib.Decompress(json) in 46.853µs
+    payload_test.go:217: json.Unmarshal in 182.96µs
+    payload_test.go:222: json end to end in 865.424µs
+goos: darwin
+goarch: amd64
+pkg: github.com/klahssen/gobench/payload
+BenchmarkProtoUnmarshalPayloadSlice20x20-4   	  824690	      1407 ns/op	     176 B/op	       6 allocs/op
+BenchmarkProtoMarshalPayloadSlice20x20-4     	    9238	    134848 ns/op	   14400 B/op	       2 allocs/op
+BenchmarkJsonUnmarshalPayloadSlice20x20-4    	   33534	     35628 ns/op	     232 B/op	       4 allocs/op
+BenchmarkJsonMarshalPayloadSlice20x20-4      	    4842	    251724 ns/op	   28807 B/op	       2 allocs/op
+BenchmarkProtoUnmarshalPayload20-4           	   28184	     48074 ns/op	   14080 B/op	      20 allocs/op
+BenchmarkProtoMarshalPayload20-4             	  166509	      7036 ns/op	     784 B/op	       2 allocs/op
+BenchmarkJsonUnmarshalPayload20-4            	    1742	    690238 ns/op	     296 B/op	       5 allocs/op
+BenchmarkJsonMarshalPayload20-4              	   89832	     13353 ns/op	    1616 B/op	       2 allocs/op
 PASS
-ok  	github.com/klahssen/gobench/payload	0.262s
+ok  	github.com/klahssen/gobench/payload	11.076s

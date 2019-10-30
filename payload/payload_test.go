@@ -14,11 +14,81 @@ import (
 )
 
 var (
-	p20auds Payload
+	p20auds                                                                          Payload
+	pslice20x20                                                                      PayloadSlice
+	pslice20x20BytesProto, pslice20x20BytesJSON, p20audsBytesProto, p20audsBytesJSON []byte
 )
 
 func init() {
+	var err error
 	p20auds = genPayload(20)
+	pslice20x20 = genPayloadSlice(20, 20)
+	p20audsBytesProto, err = protoMarshalPayloadSlice(pslice20x20)
+	if err != nil {
+		log.Fatal(err)
+	}
+	p20audsBytesJSON, err = jsonMarshalPayloadSlice(pslice20x20)
+	if err != nil {
+		log.Fatal(err)
+	}
+	pslice20x20BytesProto, err = protoMarshalPayload(p20auds)
+	if err != nil {
+		log.Fatal(err)
+	}
+	pslice20x20BytesJSON, err = jsonMarshalPayload(p20auds)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("p20audsBytesProto: %dBy, p20audsBytesJSON: %dBy", len(p20audsBytesProto), len(p20audsBytesJSON))
+	log.Printf("pslice20x20BytesProto: %dBy, pslice20x20BytesJSON: %dBy", len(pslice20x20BytesProto), len(pslice20x20BytesJSON))
+}
+
+func BenchmarkProtoUnmarshalPayloadSlice20x20(b *testing.B) {
+	dest := &PayloadSlice{}
+	for i := 1; i <= b.N; i++ {
+		protoUnmarshalPayloadSlice(pslice20x20BytesProto, dest)
+	}
+}
+func BenchmarkProtoMarshalPayloadSlice20x20(b *testing.B) {
+	for i := 1; i <= b.N; i++ {
+		protoMarshalPayloadSlice(pslice20x20)
+	}
+}
+
+func BenchmarkJsonUnmarshalPayloadSlice20x20(b *testing.B) {
+	dest := &PayloadSlice{}
+	for i := 1; i <= b.N; i++ {
+		jsonUnmarshalPayloadSlice(pslice20x20BytesJSON, dest)
+	}
+}
+func BenchmarkJsonMarshalPayloadSlice20x20(b *testing.B) {
+	for i := 1; i <= b.N; i++ {
+		jsonMarshalPayloadSlice(pslice20x20)
+	}
+}
+
+func BenchmarkProtoUnmarshalPayload20(b *testing.B) {
+	dest := &Payload{}
+	for i := 1; i <= b.N; i++ {
+		protoUnmarshalPayload(p20audsBytesProto, dest)
+	}
+}
+func BenchmarkProtoMarshalPayload20(b *testing.B) {
+	for i := 1; i <= b.N; i++ {
+		protoMarshalPayload(p20auds)
+	}
+}
+
+func BenchmarkJsonUnmarshalPayload20(b *testing.B) {
+	dest := &Payload{}
+	for i := 1; i <= b.N; i++ {
+		jsonUnmarshalPayload(p20audsBytesJSON, dest)
+	}
+}
+func BenchmarkJsonMarshalPayload20(b *testing.B) {
+	for i := 1; i <= b.N; i++ {
+		jsonMarshalPayload(p20auds)
+	}
 }
 
 func TestProtoMarshaling(t *testing.T) {

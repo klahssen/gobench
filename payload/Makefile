@@ -1,5 +1,5 @@
 runbench:
-	go test -bench=. -v -benchmem > bench.out #-memprofile=memAll.out
+	go test -bench=. -v -benchmem > bench.out
 pprof:
 	go tool pprof memAll.out
 protogo:

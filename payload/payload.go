@@ -1,7 +1,10 @@
 package payload
 
 import (
-	fmt "fmt"
+	"encoding/json"
+	"fmt"
+
+	"github.com/golang/protobuf/proto"
 )
 
 func genPayload(nAudiences int) Payload {
@@ -17,6 +20,58 @@ func genPayload(nAudiences int) Payload {
 	}
 	p.Audiences = auds
 	return p
+}
+
+func genPayloadSlice(nItems, nAudiences int) PayloadSlice {
+	s := "abcdefojkljkds"
+	p := Payload{
+		WeboId: s,
+		Action: Action_ADD,
+	}
+	aud := &Audience{AudienceId: s, DatatransferId: s}
+	auds := make([]*Audience, 0, nAudiences)
+	for i := 1; i <= nAudiences; i++ {
+		auds = append(auds, aud)
+	}
+	p.Audiences = auds
+	res := PayloadSlice{}
+	res.List = make([]*Payload, 0, nItems)
+	for i := 1; i <= nItems; i++ {
+		res.List = append(res.List, &p)
+	}
+	return res
+}
+
+func protoUnmarshalPayloadSlice(b []byte, dest *PayloadSlice) error {
+	return proto.Unmarshal(b, dest)
+}
+
+func protoMarshalPayloadSlice(data PayloadSlice) ([]byte, error) {
+	return proto.Marshal(&data)
+}
+
+func jsonUnmarshalPayloadSlice(b []byte, dest *PayloadSlice) error {
+	return json.Unmarshal(b, dest)
+}
+
+func jsonMarshalPayloadSlice(data PayloadSlice) ([]byte, error) {
+	return json.Marshal(data)
+}
+
+func protoUnmarshalPayload(b []byte, dest *Payload) error {
+	return proto.Unmarshal(b, dest)
+}
+
+func protoMarshalPayload(data Payload) ([]byte, error) {
+	return proto.Marshal(&data)
+}
+
+func jsonUnmarshalPayload(b []byte, dest *Payload) error {
+	return json.Unmarshal(b, dest)
+}
+
+func jsonMarshalPayload(data Payload) ([]byte, error) {
+	return json.Marshal(data)
 }
 
 func payloadsAreEqual(ref, comp Payload) error {

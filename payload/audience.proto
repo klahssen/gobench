@@ -9,6 +9,10 @@ enum Action {
     REMOVE=2;
 }
 
+message PayloadSlice {
+    repeated Payload list =1;
+}
+
 message Payload {
     string webo_id=1;
     repeated Audience audiences=2;
