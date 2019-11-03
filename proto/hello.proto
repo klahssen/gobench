@@ -6,3 +6,4 @@ option go_package = "github.com/klahssen/gobench/proto";
 message Hello {
     string name=1;
 }
+
