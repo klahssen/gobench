@@ -19,21 +19,20 @@ func getClient(addr string) (*grpc.ClientConn, proto.CommandsAPIClient, error) {
 	return conn, client, nil
 }
 
-func pushStream(client proto.CommandsAPIClient, n int) (string, error) {
+func pushStream(client proto.CommandsAPIClient, nProfiles, nSegsPerProfile int) (string, error) {
 	//t0 := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*4)
 	defer cancel()
 	stream, err := client.PushStream(ctx)
 	if err != nil {
 		return "", fmt.Errorf("")
 	}
 	var cmd *proto.Command
-	segs := make([]string, 0, n)
-	for i := 1; i <= n; i++ {
-		segs = make([]string, 0, n)
-		for j := 1; j <= i; j++ {
-			segs = append(segs, fmt.Sprintf("sgmt_%03d", j))
-		}
+	segs := make([]string, 0, nSegsPerProfile)
+	for j := 1; j <= nSegsPerProfile; j++ {
+		segs = append(segs, fmt.Sprintf("sgmt_%03d", j))
+	}
+	for i := 1; i <= nProfiles; i++ {
 		cmd = &proto.Command{ProfileID: fmt.Sprintf("usr_%03d", 1), SegmentIDs: segs}
 		if err = stream.Send(cmd); err != nil {
 			if err == io.EOF {
@@ -49,18 +48,17 @@ func pushStream(client proto.CommandsAPIClient, n int) (string, error) {
 	return resp.TxID, nil
 }
 
-func push(client proto.CommandsAPIClient, n int) ([]string, error) {
+func push(client proto.CommandsAPIClient, nProfiles, nSegsPerProfile int) ([]string, error) {
 	//t0 := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*4)
 	defer cancel()
 	var cmd *proto.Command
-	txIDs := make([]string, 0, n)
-	segs := make([]string, 0, n)
-	for i := 1; i <= n; i++ {
-		segs = make([]string, 0, n)
-		for j := 1; j <= i; j++ {
-			segs = append(segs, fmt.Sprintf("sgmt_%03d", j))
-		}
+	txIDs := make([]string, 0, nProfiles)
+	segs := make([]string, 0, nSegsPerProfile)
+	for j := 1; j <= nSegsPerProfile; j++ {
+		segs = append(segs, fmt.Sprintf("sgmt_%03d", j))
+	}
+	for i := 1; i <= nProfiles; i++ {
 		cmd = &proto.Command{ProfileID: fmt.Sprintf("usr_%03d", 1), SegmentIDs: segs}
 		if resp, err := client.Push(ctx, cmd); err != nil {
 			if err != nil {
