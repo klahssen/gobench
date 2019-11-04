@@ -1,0 +1,22 @@
+goos: darwin
+goarch: amd64
+pkg: github.com/klahssen/gobench/grpc/streaming/client
+BenchmarkPushStream100x100-4                        	     324	   3723276 ns/op	  252310 B/op	    1532 allocs/op
+BenchmarkUnaryPush100x100-4                         	      33	  35264776 ns/op	  755851 B/op	   10321 allocs/op
+BenchmarkPushStream10000x1-4                        	       9	 118650283 ns/op	 4573814 B/op	  120441 allocs/op
+BenchmarkUnaryPush10000x1-4                         	       1	3045505005 ns/op	55023872 B/op	 1010402 allocs/op
+BenchmarkPushStream1000x1000-4                      	       6	 168668762 ns/op	20933632 B/op	   15793 allocs/op
+BenchmarkUnaryPush1000x1000-4                       	       2	 509673324 ns/op	26030184 B/op	  103264 allocs/op
+BenchmarkUnaryPushBulk1000x400-4                    	      20	  56250331 ns/op	 4164269 B/op	    4030 allocs/op
+BenchmarkUnaryPushBulk1000x100-4                    	      67	  16901893 ns/op	 1149425 B/op	    3344 allocs/op
+BenchmarkPushStream1000x1000Parallel2-4             	       9	 142383844 ns/op	20946984 B/op	   16987 allocs/op
+BenchmarkUnaryPush1000x1000Parallel2-4              	       4	 288048390 ns/op	25918982 B/op	  100794 allocs/op
+BenchmarkPushStream1000x1000Parallel10-4            	      10	 176905544 ns/op	21249921 B/op	   33341 allocs/op
+BenchmarkUnaryPush1000x1000Parallel10-4             	       6	 167217589 ns/op	26090234 B/op	  113292 allocs/op
+BenchmarkPushStream10000x1Parallel10-4              	      24	  54029117 ns/op	 4390112 B/op	  121134 allocs/op
+BenchmarkPushStream10000x1Parallel10Independant-4   	      19	  59341861 ns/op	 5510917 B/op	  123136 allocs/op
+BenchmarkUnaryPush10000x1Parallel10-4               	       1	1667495528 ns/op	53873536 B/op	  962033 allocs/op
+BenchmarkPushStream100x100Parallel10-4              	     435	   3020885 ns/op	  333561 B/op	    4204 allocs/op
+BenchmarkUnaryPush100x100Parallel10-4               	      63	  20271194 ns/op	  746016 B/op	   10050 allocs/op
+PASS
+ok  	github.com/klahssen/gobench/grpc/streaming/client	28.878s

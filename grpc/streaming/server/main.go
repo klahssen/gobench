@@ -22,6 +22,14 @@ type server struct{}
 
 var _ proto.CommandsAPIServer = (*server)(nil)
 
+func (s *server) PushBulk(ctx context.Context, payload *proto.BulkCommand) (*proto.Confirmation, error) {
+	t0 := time.Now()
+	defer log.Printf("processed in %s", time.Since(t0))
+	tx := make([]byte, 12)
+	rand.Read(tx)
+	txID := base64.StdEncoding.EncodeToString(tx)
+	return &proto.Confirmation{TxID: txID}, nil
+}
 func (s *server) PushStream(stream proto.CommandsAPI_PushStreamServer) error {
 	t0 := time.Now()
 	cmds := make([]*proto.Command, 0, 100)

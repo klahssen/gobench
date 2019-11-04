@@ -14,6 +14,10 @@ message Command {
     Action action=3;
 }
 
+message BulkCommand {
+    repeated Command commands=1;
+}
+
 message Confirmation {
     string txID=1;
 }
@@ -21,4 +25,5 @@ message Confirmation {
 service CommandsAPI {
     rpc PushStream(stream Command) returns (Confirmation);
     rpc Push(Command) returns (Confirmation);
+    rpc PushBulk(BulkCommand) returns (Confirmation);
 }

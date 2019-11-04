@@ -84,6 +84,32 @@ func BenchmarkUnaryPush1000x1000(b *testing.B) {
 	}
 }
 
+func BenchmarkUnaryPushBulk1000x400(b *testing.B) {
+	conn, client, err := getClient("127.0.0.1:1234")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+	for i := 1; i <= b.N; i++ {
+		if _, err = pushBulk(client, 1000, 400); err != nil {
+			log.Fatal(err)
+		}
+	}
+}
+
+func BenchmarkUnaryPushBulk1000x100(b *testing.B) {
+	conn, client, err := getClient("127.0.0.1:1234")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+	for i := 1; i <= b.N; i++ {
+		if _, err = pushBulk(client, 1000, 100); err != nil {
+			log.Fatal(err)
+		}
+	}
+}
+
 func BenchmarkPushStream1000x1000Parallel2(b *testing.B) {
 	conn, client, err := getClient("127.0.0.1:1234")
 	if err != nil {
@@ -184,6 +210,28 @@ func BenchmarkPushStream10000x1Parallel10(b *testing.B) {
 		wg.Add(nworkers)
 		for j := 1; j <= nworkers; j++ {
 			go func() {
+				if _, err = pushStream(client, 10000/nworkers, 1); err != nil {
+					log.Fatal(err)
+				}
+				wg.Done()
+			}()
+		}
+		wg.Wait()
+	}
+}
+
+func BenchmarkPushStream10000x1Parallel10Independant(b *testing.B) {
+	nworkers := 10
+	for i := 1; i <= b.N; i++ {
+		wg := sync.WaitGroup{}
+		wg.Add(nworkers)
+		for j := 1; j <= nworkers; j++ {
+			go func() {
+				conn, client, err := getClient("127.0.0.1:1234")
+				if err != nil {
+					log.Fatal(err)
+				}
+				defer conn.Close()
 				if _, err = pushStream(client, 10000/nworkers, 1); err != nil {
 					log.Fatal(err)
 				}

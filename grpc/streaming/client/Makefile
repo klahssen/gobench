@@ -1,2 +1,2 @@
 runbench:
-	go test -bench=. -benchmem -v
+	go test -bench=. -benchmem -v > bench.out

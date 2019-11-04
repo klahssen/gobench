@@ -70,3 +70,25 @@ func push(client proto.CommandsAPIClient, nProfiles, nSegsPerProfile int) ([]str
 	//log.Printf("pushed %d items in %s", n, time.Since(t0))
 	return txIDs, nil
 }
+
+func pushBulk(client proto.CommandsAPIClient, nProfiles, nSegsPerProfile int) (string, error) {
+	//t0 := time.Now()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*4)
+	defer cancel()
+	segs := make([]string, 0, nSegsPerProfile)
+	for j := 1; j <= nSegsPerProfile; j++ {
+		segs = append(segs, fmt.Sprintf("sgmt_%03d", j))
+	}
+	bulk := &proto.BulkCommand{Commands: make([]*proto.Command, nProfiles)}
+	for i := 0; i < nProfiles; i++ {
+		bulk.Commands[i] = &proto.Command{ProfileID: fmt.Sprintf("usr_%03d", i), SegmentIDs: segs}
+	}
+	resp, err := client.PushBulk(ctx, bulk)
+	if err != nil {
+		if err != nil {
+			return "", fmt.Errorf("pushBulk: err: %v", err)
+		}
+	}
+	//log.Printf("pushed %d items in %s", n, time.Since(t0))
+	return resp.TxID, nil
+}
